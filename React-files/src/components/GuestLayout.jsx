@@ -9,7 +9,9 @@ function GuestLayout(props) {
     }
 
     return (
-       <Outlet/>
+
+           <Outlet/>
+
     );
 }
 
