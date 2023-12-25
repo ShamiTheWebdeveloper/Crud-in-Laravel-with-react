@@ -1,15 +1,36 @@
 import React, {useRef} from 'react';
 import {Link} from "react-router-dom";
+import axiosClient from "../axios-client.js";
+import {useStateContext} from "../context/ContextProvider.jsx";
 
 const Signup = () => {
 
     const nameRef=useRef();
     const emailRef=useRef();
     const passwordRef=useRef();
-    const confirmRef=useRef();
+    const confirmpasswordRef=useRef();
+
+    const {setUser,setToken}=useStateContext();
     const onSubmit = (ev) => {
         ev.preventDefault();
-        alert(ev);
+        const payload={
+            name:nameRef.current.value,
+            email:emailRef.current.value,
+            password:passwordRef.current.value,
+            password_confirmation:confirmpasswordRef.current.value
+        }
+
+        axiosClient.post('/signup',payload)
+            .then(({data})=>{
+                setUser(data.user)
+                setToken(data.token)
+            })
+            .catch(err=>{
+                const response=err.response;
+                if (response && response.status===422){
+                    alert(response.data.errors);
+                }
+            })
     }
     return (
         <div className='login-signup-form animated fadeInDown'>
@@ -19,7 +40,7 @@ const Signup = () => {
                     <input type='text' ref={nameRef} placeholder='Enter your username'/>
                     <input type='email' ref={emailRef} placeholder='Enter an email'/>
                     <input type='password' ref={passwordRef} placeholder='Enter a password'/>
-                    <input type='password' ref={confirmRef} placeholder='Confirm password'/>
+                    <input type='password' ref={confirmpasswordRef} placeholder='Confirm password'/>
                     <button className='btn btn-block'>Signup</button>
                     <p className='message'>
                         Already Registered ? <Link to='/login'>Login</Link>
