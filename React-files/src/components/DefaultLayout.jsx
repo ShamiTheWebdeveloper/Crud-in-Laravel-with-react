@@ -1,9 +1,10 @@
 import React from 'react';
 import {Link, Navigate, Outlet} from "react-router-dom";
 import {useStateContext} from "../context/ContextProvider.jsx";
+import axiosClient from "../axios-client.js";
 
 function DefaultLayout(props) {
-    const {user,token}=useStateContext();
+    const {user,token, setUser, setToken}=useStateContext();
     if (!token){
         return <Navigate to='/login'/>
     }
@@ -11,6 +12,11 @@ function DefaultLayout(props) {
     function onLogout(ev) {
         ev.preventDefault();
         alert(ev);
+        // axiosClient.post('/logout')
+        //     .then(() => {
+        //         setUser({})
+        //         setToken(null)
+        //     })
     }
 
     return (

@@ -1,14 +1,14 @@
-import React, {useRef} from 'react';
+import React, {createRef} from 'react';
 import {Link} from "react-router-dom";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.jsx";
 
 const Signup = () => {
 
-    const nameRef=useRef();
-    const emailRef=useRef();
-    const passwordRef=useRef();
-    const confirmpasswordRef=useRef();
+    const nameRef=createRef();
+    const emailRef=createRef();
+    const passwordRef=createRef();
+    const confirmpasswordRef=createRef();
 
     const {setUser,setToken}=useStateContext();
     const onSubmit = (ev) => {
@@ -20,6 +20,7 @@ const Signup = () => {
             password_confirmation:confirmpasswordRef.current.value
         }
         console.log(payload);
+        // debugger;
         axiosClient.post('/signup',payload)
             .then(({data})=>{
                 setUser(data.user)
@@ -27,6 +28,7 @@ const Signup = () => {
             })
             .catch(err=>{
                 const response=err.response;
+                alert(response.status);
                 if (response && response.status===422){
                     alert(response.data.errors);
                 }
@@ -35,7 +37,7 @@ const Signup = () => {
     return (
         <div className='login-signup-form animated fadeInDown'>
             <div className='form'>
-                <form onSubmit={onSubmit}>
+                <form onSubmit={onSubmit} >
                     <h1 className='title'>Signup your account</h1>
                     <input type='text' ref={nameRef} placeholder='Enter your username'/>
                     <input type='email' ref={emailRef} placeholder='Enter an email'/>
@@ -46,8 +48,8 @@ const Signup = () => {
                         Already Registered ? <Link to='/login'>Login</Link>
                     </p>
                 </form>
-             </div>
-         </div>
+            </div>
+        </div>
     );
 };
 
