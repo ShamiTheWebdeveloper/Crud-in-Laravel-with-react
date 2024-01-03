@@ -1,4 +1,4 @@
-import React, {createRef} from 'react';
+import React, {createRef, useState} from 'react';
 import {Link} from "react-router-dom";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.jsx";
@@ -7,6 +7,7 @@ const Login = () => {
     const emailRef=createRef();
     const passwordRef=createRef();
 
+    const [errors,setErrors]=useState(null); //  Errors for empty input fields
     const {setUser,setToken}=useStateContext();
     const Loginuser = (ev) => {
       ev.preventDefault();
@@ -14,6 +15,7 @@ const Login = () => {
             email:emailRef.current.value,
             password:passwordRef.current.value,
         }
+
         console.log(payload);
         // debugger;
         axiosClient.post('/login',payload)

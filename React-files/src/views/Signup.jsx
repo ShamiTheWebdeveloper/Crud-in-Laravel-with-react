@@ -1,4 +1,4 @@
-import React, {createRef} from 'react';
+import React, {createRef, useState} from 'react';
 import {Link} from "react-router-dom";
 import axiosClient from "../axios-client.js";
 import {useStateContext} from "../context/ContextProvider.jsx";
@@ -10,6 +10,7 @@ const Signup = () => {
     const passwordRef=createRef();
     const confirmpasswordRef=createRef();
 
+    const [errors,setErrors]=useState(null); //  Errors for empty input fields
     const {setUser,setToken}=useStateContext();
     const onSubmit = (ev) => {
         ev.preventDefault();
@@ -25,12 +26,14 @@ const Signup = () => {
             .then(({data})=>{
                 setUser(data.user)
                 setToken(data.token)
+                console.log(data.token)
             })
-            .catch(err=>{
-                const response=err.response;
-                alert(response.status);
-                if (response && response.status===422){
-                    alert(response.data.errors);
+            .catch( err => {
+                const response = err.response;
+                if (response && response.status === 422) {
+                    setErrors(response.data.errors);
+                }else {
+                    alert(response.status);
                 }
             })
     }
@@ -39,6 +42,14 @@ const Signup = () => {
             <div className='form'>
                 <form onSubmit={onSubmit} >
                     <h1 className='title'>Signup your account</h1>
+                    {errors &&
+                        <div className='alert'>
+                            {Object.keys(errors).map(key_errors=>(
+                                <p key={key_errors}>{errors[key_errors]}</p>
+                            ))}
+                        </div>
+
+                    }
                     <input type='text' ref={nameRef} placeholder='Enter your username'/>
                     <input type='email' ref={emailRef} placeholder='Enter an email'/>
                     <input type='password' ref={passwordRef} placeholder='Enter a password'/>

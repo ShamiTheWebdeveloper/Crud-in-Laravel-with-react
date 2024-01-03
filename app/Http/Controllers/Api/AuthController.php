@@ -9,11 +9,14 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Response;
+//use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 class AuthController extends Controller
 {
     //
-    public function Login(LoginRequest $request): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function Login(LoginRequest $request): Application | Response | \Illuminate\Contracts\Foundation\Application | ResponseFactory
     {
 
         $credentials=$request->validated();
@@ -29,7 +32,7 @@ class AuthController extends Controller
         return response(compact('user','token'));
 
     }
-    public function Signup(SignupRequest $request): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function Signup(SignupRequest $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
        $data=$request->validated();
        /** @var User $user */
@@ -41,14 +44,14 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
         ]);
+        $token=$user->createToken('main')->plainTextToken;
 
-       $token=$user->createToken('main')->plainTextToken;
-       return response(compact('user','token'));
+        return response(compact('user','token'));
 
     }
-    public function Logout(Request $request): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function Logout(Request $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
     {
         /** @var User $user */
         $user=$request->user();
