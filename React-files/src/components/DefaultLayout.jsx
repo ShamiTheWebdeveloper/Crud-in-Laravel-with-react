@@ -11,12 +11,11 @@ function DefaultLayout(props) {
 
     function onLogout(ev) {
         ev.preventDefault();
-        alert(ev);
         // axiosClient.post('/logout')
         //     .then(() => {
-        //         setUser({})
-        //         setToken(null)
-        //     })
+                setUser({})
+                setToken(null)
+            // })
     }
 
     return (

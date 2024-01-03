@@ -48,11 +48,11 @@ class AuthController extends Controller
        return response(compact('user','token'));
 
     }
-//    public function Logout(Request $request): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
-//    {
-//        /** @var User $user */
-//        $user=$request->user();
-//        $user->currentAccessToken()->delete();
-//        return response('',204);
-//    }
+    public function Logout(Request $request): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        /** @var User $user */
+        $user=$request->user();
+        $user->currentAccessToken()->delete();
+        return response('',204);
+    }
 }
