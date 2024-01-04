@@ -41,21 +41,22 @@ class AuthController extends Controller
 //           'email'=>$data->email,
 //           'password'=>Hash::make($data->password)
 //       ]);
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+//        $user = User::create([
+//            'name' => $data['name'],
+//            'email' => $data['email'],
+//            'password' => Hash::make($data['password']),
+//        ]);
+        $user = User::create($data);
         $token=$user->createToken('main')->plainTextToken;
 
         return response(compact('user','token'));
 
     }
-    public function Logout(Request $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
-    {
-        /** @var User $user */
-        $user=$request->user();
-        $user->currentAccessToken()->delete();
-        return response('',204);
-    }
+//    public function Logout(Request $request): Application|Response|\Illuminate\Contracts\Foundation\Application|ResponseFactory
+//    {
+//        /** @var User $user */
+//        $user=$request->user();
+//        $user->currentAccessToken()->delete();
+//        return response('',204);
+//    }
 }

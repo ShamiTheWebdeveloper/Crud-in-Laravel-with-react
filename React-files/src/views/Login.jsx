@@ -28,7 +28,6 @@ const Login = () => {
                 // response.status
                 if (response && response.status === 422) {
                     alert(response.data.message);
-                    // setMessage(response.data.message)
                 }
             })
     }
