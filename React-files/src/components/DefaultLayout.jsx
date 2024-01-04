@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link, Navigate, Outlet} from "react-router-dom";
 import {useStateContext} from "../context/ContextProvider.jsx";
 import axiosClient from "../axios-client.js";
@@ -11,13 +11,22 @@ function DefaultLayout(props) {
 
     function onLogout(ev) {
         ev.preventDefault();
-        // axiosClient.post('/logout')
-        //     .then(() => {
+
+        axiosClient.post('/logout')
+            .then(() => {
                 setUser({})
                 setToken(null)
-            // })
+            })
+            // .catch()
     }
 
+    useEffect(() => {
+        axiosClient.get('/user')
+            .then(({data})=>{
+                setUser(data);
+            })
+    }, []);
+    // console.log(user.name);
     return (
         <div id='defaultLayout'>
             <aside>

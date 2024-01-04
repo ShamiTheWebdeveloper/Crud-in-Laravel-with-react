@@ -14,11 +14,14 @@ use App\Http\Controllers\Api\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function (){
+    Route ::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::post('/logout',[AuthController::class,'Logout'])->name('logout');
 });
 
 Route::post('/signup',[AuthController::class,'Signup'])->name('signup');
 Route::post('/login',[AuthController::class,'Login'])->name('login');
-Route::post('/logout',[AuthController::class,'Logout'])->name('logout');
 
