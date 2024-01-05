@@ -70,7 +70,7 @@
                     </div>
                     <div class="my-3">
                         <label>Date:</label>
-                        <input type="date" name="date">
+                        <input type="date" name="date" class="form-control">
                     </div>
 
                 </div>
