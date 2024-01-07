@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
+    <title></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </head>
@@ -36,7 +35,7 @@
                  </div>
                  <div class="my-3">
                      <label>Date:</label>
-                     <input type="date" name="date">
+                     <input type="date" name="date" class="form-control">
                  </div>
 
              </div>
@@ -146,15 +145,19 @@
         // $(this).html('Save');
          let expense_id;
         function editrecord(expense_id) {
-            // let expense_id=$('').val();
 
             console.log(expense_id);
-            // $.ajax({
-            //     url:"expense_action.php?action=edit",
-            //     type:"get",
-            //     data:{expense_id:expense_id},
-            //     success:function (data) {}
-            // });
+            $.ajax({
+                url:"expense_action.php?action=edit",
+                type:"get",
+                data:{expense_id:expense_id},
+                success:function (data) {
+
+                },
+                error:{
+
+                }
+            });
         }
     // });
 </script>

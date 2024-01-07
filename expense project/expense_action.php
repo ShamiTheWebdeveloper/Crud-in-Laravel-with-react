@@ -7,7 +7,7 @@ if ($connection) {
 
         switch ($action) {
             case 'insert':
-             echo "inserted";
+             mysqli_query($connection,'insert')
              break;
             case 'edit':
 
