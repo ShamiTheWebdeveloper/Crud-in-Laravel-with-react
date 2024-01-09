@@ -24,7 +24,7 @@ const router=createBrowserRouter([
             },
             {
                 path:'/users',
-                element:<Users/>
+                element:<Users />
             },
             {
                 path:'/users/new',

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axiosClient from "../axios-client.js";
 import {Link, MemoryRouter} from "react-router-dom";
 
-const Users = () => {
+const Users = (logical_errors) => {
     const [users,setUsers]=useState(false);
     const [loading,setLoading]=useState(false);
 
@@ -47,13 +47,17 @@ const Users = () => {
                           <td>{u.email}</td>
                           <td>{u.created_at}</td>
                       </tr>
-                    ))
-                    }
+
+                    ))}
                     </tbody>
 
                 </table>
             </div>
+            <span style={{color:'red'}}>
+                {logical_errors}
+            </span>
         </div>
+
     );
 };
 
