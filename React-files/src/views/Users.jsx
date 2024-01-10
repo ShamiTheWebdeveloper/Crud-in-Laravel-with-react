@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axiosClient from "../axios-client.js";
-import {Link, MemoryRouter} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const Users = () => {
     const [users,setUsers]=useState(false);
@@ -10,11 +10,23 @@ const Users = () => {
         getUsers();
     }, []);
 
+    function onDelete(u) {
+        if (!window.confirm('Really want to delete?')){
+            return
+        }
+
+        axiosClient.delete(`/users/${u.id}`)
+            .then(()=>{
+                getUsers();
+            })
+    }
+
     const getUsers = () => {
         setLoading(true);
         axiosClient.get('/users')
             .then(({data})=>{
                 setLoading(false);
+                setUsers(data.data);
                 console.log(data);
             })
             .catch(()=>{
@@ -39,17 +51,32 @@ const Users = () => {
                         <th>Actions</th>
                     </tr>
                     </thead>
+                    { loading &&
                     <tbody>
-                    {users.map(u=>(
-                      <tr>
-                          <td>{u.id}</td>
-                          <td>{u.name}</td>
-                          <td>{u.email}</td>
-                          <td>{u.created_at}</td>
-                      </tr>
-                    ))
-                    }
+                    <tr>
+                        <td colSpan='5' className='text-center'>
+                            Loading...
+                        </td>
+                    </tr>
                     </tbody>
+                    }
+                    {!loading &&
+                        <tbody>
+                        {users && users.map(u => (
+                            <tr key={u.id}>
+                                <td>{u.id}</td>
+                                <td>{u.name}</td>
+                                <td>{u.email}</td>
+                                <td>{u.created_at}</td>
+                                <td>
+                                    <Link className='btn-edit' to={'/users/'+u.id}>Edit</Link>
+                                    &nbsp;
+                                    <button className='btn-delete' onClick={ev=>onDelete(u)}>Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    }
 
                 </table>
             </div>
