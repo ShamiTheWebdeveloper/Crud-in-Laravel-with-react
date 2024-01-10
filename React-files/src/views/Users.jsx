@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axiosClient from "../axios-client.js";
 import {Link} from "react-router-dom";
 
-const Users = () => {
+const Users = (logical_errors) => {
     const [users,setUsers]=useState(false);
     const [loading,setLoading]=useState(false);
 
@@ -53,11 +53,23 @@ const Users = () => {
                     </thead>
                     { loading &&
                     <tbody>
+<<<<<<< HEAD
                     <tr>
                         <td colSpan='5' className='text-center'>
                             Loading...
                         </td>
                     </tr>
+=======
+                    {users.map(u=>(
+                      <tr>
+                          <td>{u.id}</td>
+                          <td>{u.name}</td>
+                          <td>{u.email}</td>
+                          <td>{u.created_at}</td>
+                      </tr>
+
+                    ))}
+>>>>>>> c7ca46f2dd508df28ba87c81c4962c5fea33300e
                     </tbody>
                     }
                     {!loading &&
@@ -80,7 +92,11 @@ const Users = () => {
 
                 </table>
             </div>
+            <span style={{color:'red'}}>
+                {logical_errors}
+            </span>
         </div>
+
     );
 };
 
