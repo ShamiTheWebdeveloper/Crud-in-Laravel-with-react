@@ -53,23 +53,11 @@ const Users = (logical_errors) => {
                     </thead>
                     { loading &&
                     <tbody>
-<<<<<<< HEAD
                     <tr>
                         <td colSpan='5' className='text-center'>
                             Loading...
                         </td>
                     </tr>
-=======
-                    {users.map(u=>(
-                      <tr>
-                          <td>{u.id}</td>
-                          <td>{u.name}</td>
-                          <td>{u.email}</td>
-                          <td>{u.created_at}</td>
-                      </tr>
-
-                    ))}
->>>>>>> c7ca46f2dd508df28ba87c81c4962c5fea33300e
                     </tbody>
                     }
                     {!loading &&
@@ -92,9 +80,9 @@ const Users = (logical_errors) => {
 
                 </table>
             </div>
-            <span style={{color:'red'}}>
-                {logical_errors}
-            </span>
+            {/*<span style={{color:'red'}}>*/}
+            {/*    {logical_errors}*/}
+            {/*</span>*/}
         </div>
 
     );
