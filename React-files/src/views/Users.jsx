@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import axiosClient from "../axios-client.js";
 import {Link} from "react-router-dom";
+import {useStateContext} from "../context/ContextProvider.jsx";
 
-const Users = (logical_errors) => {
+const Users = () => {
     const [users,setUsers]=useState(false);
     const [loading,setLoading]=useState(false);
-
+    const {setNotification}=useStateContext();
     useEffect(() => {
         getUsers();
     }, []);
@@ -18,6 +19,7 @@ const Users = (logical_errors) => {
         axiosClient.delete(`/users/${u.id}`)
             .then(()=>{
                 getUsers();
+                setNotification('Users successfully deleted');
             })
     }
 
@@ -27,7 +29,6 @@ const Users = (logical_errors) => {
             .then(({data})=>{
                 setLoading(false);
                 setUsers(data.data);
-                console.log(data);
             })
             .catch(()=>{
                 setLoading(false);
@@ -80,9 +81,7 @@ const Users = (logical_errors) => {
 
                 </table>
             </div>
-            {/*<span style={{color:'red'}}>*/}
-            {/*    {logical_errors}*/}
-            {/*</span>*/}
+
         </div>
 
     );
