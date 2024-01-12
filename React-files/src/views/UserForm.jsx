@@ -16,10 +16,8 @@ function UserForm() {
 
     if (id){
         useEffect(() => {
-
             setLoading(true);
-
-            axiosClient.get('/users/${id}')
+            axiosClient.get(`/users/${id}`)
                 .then(({data})=>{
                     setLoading(false);
                     setUser(data);
@@ -30,6 +28,10 @@ function UserForm() {
             });
         }, []);
     }
+    const onSubmit = (ev) => {
+      ev.preventDefault();
+
+    }
 
     return (
         <>
@@ -37,7 +39,7 @@ function UserForm() {
             {!user.id && <h1>Add new User</h1>}
             <div className='card animated fadeInDown'>
                 {loading && (
-                    <div className='text-center'>Loading..</div>
+                    <div className='text-center'>Loading...</div>
                 )}
                 {errors &&
                     <div className='alert'>
@@ -45,8 +47,17 @@ function UserForm() {
                             <p key={key_errors}>{errors[key_errors]}</p>
                         ))}
                     </div>
-
                 }
+                {!loading &&
+                    <form onSubmit={onSubmit}>
+                        <input value={user.name} onChange={ev =>setUser({...user,name:ev.target.value }) } placeholder='Name'/>
+                        <input value={user.email} onChange={ev =>setUser({...user,email:ev.target.value }) } placeholder='Email'/>
+                        <input onChange={ev =>setUser({...user,password:ev.target.value }) } placeholder='Password'/>
+                        <input onChange={ev =>setUser({...user,password_confirmation:ev.target.value }) } placeholder='Password confirmation'/>
+                        <button className='btn'>Save</button>
+                    </form>
+                }
+
             </div>
         </>
     );
